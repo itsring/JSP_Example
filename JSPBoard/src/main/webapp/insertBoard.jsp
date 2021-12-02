@@ -35,6 +35,10 @@ header>div>h1 {
 				<input type="text" class="form-control" id="userId" name="userId" placeholder="아이디를 입력해주세요">
 			</div>
 			<div class="mt-3">
+				<label for="contentsPw">글삭제 비밀번호 : </label> 
+				<input type="password" class="form-control" id="contentsPw" name="contentsPw" placeholder="비밀번호를 입력해주세요">
+			</div>
+			<div class="mt-3">
 				<label for="contents">내용 : </label> 
 				<textarea rows="5" class="form-control" id="contents" name="contents" placeholder="글 내용을 입력해주세요"></textarea>
 			</div>
