@@ -1,50 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*"%>
-
-<%!
-	/* 
-	DB와 실제 연결하기 위한 Connection 객체 
-	미리 선언해 놓는 이유 : try/catch문 내부에서 선언시 오류가 발생하면 해당 객체를 삭제할 수 없음 / code block이 달라지기 때문
-	*/
-	Connection conn = null;
-	Statement stmt = null; // DB에 SQL 질의를 하기 위한 객체
-	ResultSet rs = null; // SELECT 질의 후 결과를 저장하기 위한 객체
-
-	String driver = "com.mysql.cj.jdbc.Driver"; // MySql 드라이버 이름 / 데이터 베이스 종류에 따라 다름
-	
-	String url = "jdbc:mysql://localhost:3306/testdb?useUnicode=true&characterEncoding=utf8&serverTimerzone=UTC"; //실제 DB 접속 주소 / DB마다 방식이 다름
-	
-	/* DB에서 SQL문을 실행할 user_id, user_pw  실제 개발할 때는 소스에 id와 비밀번호를 넣으면 안됨 */
-	String uid = "test_user";
-	String upw = "1234";
-	%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>게시판 만들기</title>
 <!-- 부트스트랩 -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<!-- base_style -->
-<style>
-.jumbotron {
-	background-color: lightgray;
-}
-
-header>div>h1 {
-	text-align: center;
-}
-</style>
+<%@ include file="bootstrap.jsp"%>
 </head>
-
 <body>
-	<header class="container">
-		<div class="mt-4 p-5 rounded jumbotron">
-			<h1>게시판 목록 페이지</h1>
-		</div>
-	</header>
-
+	<%@ include file="dbconn.jsp"%>
+	<%@ include file="header.jsp"%>
 	<main class="container">
 		<table class="table table-striped table-hover text-center mt-5">
 			<colgroup>
@@ -86,8 +51,8 @@ header>div>h1 {
 					*/
 					Class.forName(driver);
 					conn = DriverManager.getConnection(url, uid, upw);
-					stmt = conn.createStatement();
-					rs = stmt.executeQuery(sql);
+					pstmt = conn.prepareStatement(sql);
+					rs = pstmt.executeQuery();
 					
 					/*
 					ResultSet클래스의 next() 메서드 실행시 남아있는 데이터가 있으면 true 없으면 false 
@@ -118,20 +83,22 @@ header>div>h1 {
 				} catch (SQLException ex) {
 			
 				} finally {
-					/*끝나면 닫기*/
+					/*끝나면 닫기
+					데이터 베이스 사용 후 리소스 삭제를 위해 닫음
+					데이터 베이스는 외부 리소스이기 때문에 자바의 가비지컬렉터가 자동으로 메모리에서 삭제를 할 수 없음
+					삭제 시 사용된 순서의 반대로 삭제 (마지막에 사용된 순서대로 삭제)*/
 					if (rs != null) {
 						rs.close();
 					}
-					if (stmt != null) {
-						stmt.close();
+					if (pstmt != null) {
+						pstmt.close();
 					}
 					if (conn != null) {
 						conn.close();
 					}
 				}
 				%>
-
-				
+			
 			</tbody>
 		</table>
 		<div class="d-flex justify-content-end">
@@ -139,11 +106,7 @@ header>div>h1 {
 			<a href="insertBoard.jsp" class="btn btn-primary">글쓰기</a>
 		</div>
 	</main>
-
-	<footer class="container-fluid fixed-bottom p-0">
-		<div class="mt-3 p-5 jumbotron text-center">
-			<p>made by itsring</p>
-		</div>
-	</footer>
+	<%@ include file="footer.jsp"%>
+	
 </body>
 </html>

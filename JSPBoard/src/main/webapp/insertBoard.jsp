@@ -18,11 +18,7 @@ header>div>h1 {
 </style>
 </head>
 <body>
-	<header class="container">
-		<div class="mt-4 p-5 rounded jumbotron">
-			<h1>게시판 글 등록 페이지</h1>
-		</div>
-	</header>
+	<%@ include file="header.jsp"%>
 
 	<main class="container">
 		<form action="insertBoard_process.jsp" class="mt-5">
@@ -50,11 +46,7 @@ header>div>h1 {
 		</form>
 	</main>
 
-	<footer class="container-fluid fixed-bottom p-0">
-		<div class="mt-3 p-5 jumbotron text-center">
-			<p>made by itsring</p>
-		</div>
-	</footer>
+	<%@ include file="footer.jsp"%>
 
 
 </body>

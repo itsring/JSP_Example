@@ -1,31 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
-
-<%!Connection conn = null;
-	Statement stmt = null;
-	ResultSet rs = null;
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/testdb?useUnicode=true&characterEncoding=utf8&serverTimerzone=UTC";
-
-	String uid = "test_user";
-	String upw = "1234";%>
+<%@ include file="dbconn.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>게시판 만들기</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<!-- base_style -->
-<style>
-.jumbotron {
-	background-color: lightgray;
-}
-
-header>div>h1 {
-	text-align: center;
-}
-</style>
+<%@ include file="bootstrap.jsp"%>
 <script>
 	window.addEventListener("DOMContentLoaded", function() {
 		var btnCancel = document.querySelector("#btn-cancel");
@@ -36,12 +17,7 @@ header>div>h1 {
 </script>
 </head>
 <body>
-	<header class="container">
-		<div class="mt-4 p-5 rounded jumbotron">
-			<h1>게시판 글 수정 페이지</h1>
-		</div>
-	</header>
-
+	<%@ include file="header.jsp"%>
 	<main class="container">
 		<form class="mt-5" action="updateBoard_process.jsp" method="post">
 			<%
@@ -50,13 +26,15 @@ header>div>h1 {
 
 			String sql = "select idx, title, contents, creater_id, hit_cnt ";
 			sql += "from t_board ";
-			sql += "where idx= " + num + " ";
+			sql += "where idx= ? ";
 			sql += "AND deleted_yn = 'N' ";
 			try {
 				Class.forName(driver);
 				conn = DriverManager.getConnection(url, uid, upw);
-				stmt = conn.createStatement();
-				rs = stmt.executeQuery(sql);
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1,num);
+				
+				rs = pstmt.executeQuery();
 				while (rs.next()) {
 					int idx = rs.getInt("idx");
 					String title = rs.getString("title");
@@ -101,8 +79,8 @@ header>div>h1 {
 				if (rs != null) {
 					rs.close();
 				}
-				if (stmt != null) {
-					stmt.close();
+				if (pstmt != null) {
+					pstmt.close();
 				}
 				if (conn != null) {
 					conn.close();
@@ -111,11 +89,6 @@ header>div>h1 {
 			%>
 		</form>
 	</main>
-
-	<footer class="container-fluid fixed-bottom p-0">
-		<div class="mt-3 p-5 jumbotron text-center">
-			<p>made by itsring</p>
-		</div>
-	</footer>
+	<%@ include file="footer.jsp"%>
 </body>
 </html>

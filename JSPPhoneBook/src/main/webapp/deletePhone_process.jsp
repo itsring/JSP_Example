@@ -4,8 +4,7 @@
 <%
 request.setCharacterEncoding("utf-8");
 
-int idx = Integer.parseInt(request.getParameter("idx"));
-String passwd = request.getParameter("contentPw");
+int seq = Integer.parseInt(request.getParameter("seq"));
 /* 쿼리문 작성시 데이터 베이스에서 동작되는지 확인 후 복붙해서 수정할거 수정하는게 가장 오타율이 낮음 
 String sql = "update t_board ";
 sql += "set deleted_yn = 'Y' ";
@@ -13,17 +12,13 @@ sql += "where idx = "+idx+" ";
 sql += "AND passwd ='"+passwd+"' "; */
 
 /* PreparedStatement사용시 */
-String sql = "update t_board ";
-sql += "set deleted_yn = 'Y' ";
-sql += "where idx =? ";
-sql += "AND passwd =?";
+String sql = "delete from phone_book where seq =?;";
 try{
 	
 	Class.forName(driver);
 	conn = DriverManager.getConnection(url, uid, upw);
 	pstmt = conn.prepareStatement(sql);
-	pstmt.setInt(1,idx);
-	pstmt.setString(2,passwd);
+	pstmt.setInt(1,seq);
 	pstmt.executeUpdate();
 	int count =pstmt.executeUpdate();
 	if(count<1){
@@ -47,5 +42,5 @@ try{
 	}
 }
 
-response.sendRedirect("boardList.jsp");
+response.sendRedirect("PhoneList.jsp");
 %>

@@ -1,17 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
-
-<%!
-Connection conn = null;
-Statement stmt = null;
-
-String driver = "com.mysql.cj.jdbc.Driver";
-String url = "jdbc:mysql://localhost:3306/testdb?useUnicode=true&characterEncoding=utf8&serverTimerzone=UTC";
-
-String uid = "test_user";
-String upw = "1234";
-%>
+<%@ include file="dbconn.jsp"%>
 
 <%
 request.setCharacterEncoding("utf-8");
@@ -22,22 +12,27 @@ String contents = request.getParameter("contents");
 String updateId = request.getParameter("userId");
 String contentPw = request.getParameter("contentPw");
 
-String sql = "update t_board set title = '"+title+"', contents ='"+contents+"', ";
-sql +="update_id = '"+updateId+"', updated_date = NOW() ";
-sql +="where idx = "+idx+" ";
-sql +="AND passwd ='"+contentPw+"' ";
+String sql = "update t_board set title =?, contents =?, ";
+sql += "update_id =?, updated_date = NOW() ";
+sql += "where idx =? ";
+sql += "AND passwd =?";
 
 try{
 	Class.forName(driver);
 	conn = DriverManager.getConnection(url,uid,upw);
-	stmt = conn.createStatement();
-	stmt.executeUpdate(sql);
+	pstmt = conn.prepareStatement(sql);
+	pstmt.setString(1,title);
+	pstmt.setString(2,contents);
+	pstmt.setString(3,updateId);
+	pstmt.setInt(4,idx);
+	pstmt.setString(5,contentPw);
 	
+	pstmt.executeUpdate();
 }catch(SQLException ex){
 	
 }finally{
-	if(stmt!=null){
-		stmt.close();	
+	if(pstmt!=null){
+		pstmt.close();	
 	}
 	if(conn!=null){
 		conn.close();

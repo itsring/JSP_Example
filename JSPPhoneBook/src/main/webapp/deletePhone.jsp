@@ -24,18 +24,14 @@ int num = Integer.parseInt(request.getParameter("num"));
 	<%@ include file="header.jsp"%>
 	
 	<main class="container">
-		<form action="deleteBoard_process.jsp" class="mt-5" method="post">
+		<form action="deletePhone_process.jsp" class="mt-5" method="post">
 			<div class="my-3">
-				<label for="idx">삭제할 글 번호</label>
-				<input type="text" class="form-control" id="idx" name ="idx" readonly value="<%=num%>">
-			</div>
-			<div class="my-3">
-				<label for="contentPw">삭제 비밀번호</label>
-				<input type="password" class="form-control" id="contentPw" name ="contentPw" placeholder="글을 삭제하려면 비밀번호를 입력하세요." >
+				<label for="seq">삭제할 전화번호 순번</label>
+				<input type="text" class="form-control" id="seq" name ="seq" readonly value="<%=num%>">
 			</div>
 			<div class="d-flex justify-content-between">
 				<div>
-					<a href="boardList.jsp" class="btn btn-secondary">목록</a>
+					<a href="PhoneList.jsp" class="btn btn-secondary">목록</a>
 					
 				</div>
 					<div>
