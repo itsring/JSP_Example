@@ -5,17 +5,11 @@
 <jsp:useBean id="dao" class="com.bitc.dto.MemberDao"></jsp:useBean>
 <jsp:useBean id="member" class="com.bitc.dto.MemberDto"></jsp:useBean>
 
-
-
-
-
 <%
 /*
 1. 사용자가 입력한 내용 가져오기
 2. DB접속
 3. 사용자 정보 DB 등록
-
-
 */
 
 request.setCharacterEncoding("UTF-8");

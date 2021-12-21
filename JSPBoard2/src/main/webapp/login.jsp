@@ -15,35 +15,13 @@ pageEncoding="UTF-8"%>
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+    <script>
+    </script>
     <title>Insert title here</title>
   </head>
   <body>
-    <header class="container-fluid px-0">
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a href="#" class="navber-brand">LOGO</a>
-        <div class="collapse navbar-collapse" id="mynavbar">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a href="#" class="nav-link active">메뉴1</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link active">메뉴2</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link active">메뉴3</a>
-            </li>
-          </ul>
-          <form class="d-flex">
-            <button type="button" class="btn btn-outline-primary">
-              로그인
-            </button>
-          </form>
-        </div>
-      </nav>
-      <div class="mt-4 p-5 bg-secondary rounded bg-opacity-50">
-        <h1 class="text-center">로그인</h1>
-      </div>
-    </header>
+  
+    <%@include file="header.jsp" %>
     <main class="container mt-5">
       <section class="row">
         <article class="col-sm-4 mx-auto">
@@ -76,8 +54,6 @@ pageEncoding="UTF-8"%>
         </article>
       </section>
     </main>
-    <footer class="container-fluid text-center p-5 mt-5">
-      <p class="lead text-muted">made by itsring</p>
-    </footer>
+    <%@include file="footer.jsp" %>
   </body>
 </html>

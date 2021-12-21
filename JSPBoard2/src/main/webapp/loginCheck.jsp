@@ -45,7 +45,7 @@
 		response.sendRedirect("./boardList.jsp");
 	}else{
 		/* login fail */
-		response.sendRedirect("./loginFail.jsp");
+		response.sendRedirect("./login.jsp");
 	
 	/* 	out.println("사용자 없음"); */
 	}

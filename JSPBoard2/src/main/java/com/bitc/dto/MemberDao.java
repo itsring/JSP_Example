@@ -156,7 +156,6 @@ public class MemberDao {
 				se.printStackTrace();
 			}
 		}
-
 		return result;
 	}
 }

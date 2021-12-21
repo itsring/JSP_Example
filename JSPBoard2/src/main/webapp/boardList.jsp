@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ page import="com.bitc.dto.BoardDto" %>
+<%@ page import="com.bitc.dto.BoardDao" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -18,44 +21,20 @@ pageEncoding="UTF-8"%>
     <title>게시판 목록</title>
   </head>
   <body>
-    <header class="container-fluid px-0">
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a href="#" class="navber-brand">LOGO</a>
-        <div class="collapse navbar-collapse" id="mynavbar">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a href="#" class="nav-link active">메뉴1</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link active">메뉴2</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link active">메뉴3</a>
-            </li>
-          </ul>
-          <form class="d-flex">
-            <a href="login.jsp" class="btn btn-outline-primary"> 로그인 </a>
-          </form>
-        </div>
-      </nav>
-      <div class="container">
-        <div class="mt-4 p-5 bg-secondary rounded bg-opacity-50">
-          <h1 class="text-center">게시판 목록 페이지</h1>
-        </div>
-      </div>
-    </header>
+   
+   <%@include file="header.jsp" %>
+   
     <main class="container">
       <section class="row">
         <article class="col-sm">
           <div class="table-responsive-sm">
             <table class="table table-hover table-striped text-center">
-              <colgroup class="row">
+              <colgroup>
                 <col width="10%" />
-                <col width="44%" />
+                <col width="50%" />
                 <col width="15%" />
                 <col width="15%" />
-                <col width="7%" />
-                <col width="7%" />
+                <col width="10%" />
               </colgroup>
               <thead class="">
                 <tr>
@@ -64,18 +43,29 @@ pageEncoding="UTF-8"%>
                   <th>글쓴이</th>
                   <th>등록시간</th>
                   <th>조회수</th>
-                  <th>추천수</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td class="text-start">테스트 제목</td>
-                  <td>테스트 계정 01</td>
-                  <td>2021년 12월 20일</td>
-                  <td>10</td>
-                  <td>10</td>
-                </tr>
+              <%
+              	
+              	
+              	BoardDao dao = new BoardDao();
+              	ArrayList<BoardDto> boardList = dao.selectBoardList();
+              	
+              	for(BoardDto item : boardList){
+              		String data = "";
+              		              		
+              		data +="<tr>";
+              		data +="<td>"+item.getIdx()+"</td>";
+              		data += "<td class='text-start'><a class='text-decoration-none' href='boardSelect.jsp?idx=" + item.getIdx() + "'>" + item.getTitle() + "</a></td>";
+              		data +="<td>"+item.getCreater_id()+"</td>";
+              		data +="<td>"+item.getCreated_date()+"</td>";
+              		data +="<td>"+item.getHit_cnt()+"</td>";
+              		data +="<tr>";
+              		
+              		out.println(data);
+              	}
+              %>
               </tbody>
             </table>
           </div>
@@ -87,8 +77,6 @@ pageEncoding="UTF-8"%>
         </article>
       </section>
     </main>
-    <footer class="container-fluid text-center p-5 mt-5">
-      <p class="lead text-muted">made by itsring</p>
-    </footer>
+     <%@include file="footer.jsp" %>
   </body>
 </html>

@@ -28,44 +28,8 @@ pageEncoding="UTF-8"%>
     </script>
   </head>
   <body>
-    <header class="container-fluid px-0">
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark px-3">
-        <a href="#" class="navbar-brand">JSP Board</a>
-
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-targer="#mynavbar"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="mynavbar">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a href="#" class="nav-link active">메뉴 1</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">메뉴 2</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">메뉴 3</a>
-            </li>
-          </ul>
-
-          <div class="d-flex">
-            <a href="login.jsp" class="btn btn-outline-primary">로그인</a>
-          </div>
-        </div>
-      </nav>
-
-      <div class="container">
-        <div class="mt-4 p-5 bg-secondary rounded bg-opacity-50">
-          <h1 class="text-center">회원가입 페이지</h1>
-        </div>
-      </div>
-    </header>
+ 
+    <%@include file="header.jsp" %>
 
     <main class="container">
       <section class="row">
@@ -180,8 +144,6 @@ pageEncoding="UTF-8"%>
       </section>
     </main>
 
-    <footer class="container-fluid text-center p-5 mt-5 border-top">
-      <p class="lead text-muted">made by bitc</p>
-    </footer>
+    <%@include file="footer.jsp" %>
   </body>
 </html>
